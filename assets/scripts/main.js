@@ -91,6 +91,7 @@ async function fetchRecipes() {
  * appends them to the page
  */
 function createRecipeCards() {
+  /**
   // Makes a new recipe card
   const recipeCard = document.createElement('recipe-card');
   // Inputs the data for the card. This is just the first recipe in the recipes array,
@@ -111,6 +112,7 @@ function createRecipeCards() {
   bindRecipeCard(recipeCard, page);
 
   document.querySelector('.recipe-cards--wrapper').appendChild(recipeCard);
+  */
 
   /**
    * TODO - Part 1 - Step 3
@@ -122,6 +124,27 @@ function createRecipeCards() {
    * After this step you should see multiple cards rendered like the end of the last
    * lab
    */
+
+   for (let i = 0; i < recipes.length; i++) {
+     const recipeCard = document.createElement('recipe-card');
+     recipeCard.data = recipeData[recipes[i]];
+     const page = recipeData[recipes[i]]['page-name'];
+    router.addPage(page, function() {
+      document.querySelector('.section--recipe-cards').classList.remove('shown');
+      document.querySelector('.section--recipe-expand').classList.add('shown');
+      document.querySelector('recipe-expand').data = recipeData[recipes[i]];
+    });
+    bindRecipeCard(recipeCard, page);
+
+    document.querySelector('.recipe-cards--wrapper').appendChild(recipeCard);
+
+    if (i > 2) {
+      recipeCard.classList.add('hidden');
+    }
+
+   }
+
+
 }
 
 /**
