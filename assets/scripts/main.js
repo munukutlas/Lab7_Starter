@@ -200,6 +200,13 @@ function bindEscKey() {
    * if the escape key is pressed, use your router to navigate() to the 'home'
    * page. This will let us go back to the home page from the detailed page.
    */
+
+
+   document.addEventListener('keydown', function() {
+     //console.log('event listener for esc');
+     router.navigate('home');
+   });
+
 }
 
 /**
@@ -221,4 +228,17 @@ function bindPopstate() {
    * so your navigate() function does not add your going back action to the history,
    * creating an infinite loop
    */
+
+
+   window.addEventListener('popstate', (event) => {
+     //console.log('popstate fired');
+     if (event.state) {
+       //console.log('navigating to another page');
+       router.navigate(event.state, true);
+     } else {
+       //console.log('navigating home');
+       router.navigate('home');
+     }
+   });
+
 }
