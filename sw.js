@@ -9,6 +9,21 @@ self.addEventListener('install', function (event) {
    * TODO - Part 2 Step 2
    * Create a function as outlined above
    */
+
+   var urlsToCache = [
+     '/',
+     '/assets/scripts/main.js',
+     '/assets/scripts/Router.js'
+   ]
+
+   event.waitUntil(
+     caches.open(CACHE_NAME)
+     .then(function(cache) {
+       console.log('opened cache');
+       return cache.addAll(urlsToCache);
+     })
+   );
+
 });
 
 /**
@@ -21,6 +36,7 @@ self.addEventListener('activate', function (event) {
    * TODO - Part 2 Step 3
    * Create a function as outlined above, it should be one line
    */
+  event.waitUntil(clients.claim());
 });
 
 // Intercept fetch requests and store them in the cache
@@ -29,4 +45,12 @@ self.addEventListener('fetch', function (event) {
    * TODO - Part 2 Step 4
    * Create a function as outlined above
    */
+  
+   var responseToCache = response.clone();
+
+   caches.open(CACHE_NAME)
+   .then(function(cache) {
+     cache.put(event.request, responseToCache);
+   });
+
 });
