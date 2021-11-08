@@ -39,7 +39,7 @@ export class Router {
      * page
      */
 
-     this['page'] = pageFunc;
+     this[page] = pageFunc;
   }
 
   /**
@@ -69,7 +69,25 @@ export class Router {
      */
 
 
-     
+     if (!(this[page])) {
+       return;
+     }
+
+     let hash = '';
+     if (page != 'home') {
+      hash = '#' + page;
+     }
+
+     console.log(statePopped);
+
+     if (window.location.hash != hash && !statePopped) {
+       history.pushState({page: page}, '', hash);
+     }
+
+     console.log('calling function');
+
+     this[page]();
+
 
   }
 }
